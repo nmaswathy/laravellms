@@ -20,6 +20,7 @@ class UserController extends Controller
     public function create()
     {
         return view('admin.users.create');
+
     }
 
     public function store(Request $request)
@@ -27,13 +28,13 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255|unique:users,name',
             'email' => 'required|string|email|max:255|unique:users,email',
-            'phone' => 'nullable|string|max:15',
-            'password' => 'required|string|min:4',
+            'phone' => 'required|string|max:15',
+            'password' => 'required|string|min:6',
+            'role' => 'required|in:user,admin',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data['password'] = Hash::make($data['password']);
-        $data['role'] = 'user';
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('assets/images/users', 'public');
@@ -55,8 +56,9 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255|unique:users,name,' . $user->id,
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:15',
-            'password' => 'nullable|string|min:4',
+            'phone' => 'required|string|max:15',
+            'password' => 'nullable|string|min:6',
+            'role' => 'required|in:user,admin',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

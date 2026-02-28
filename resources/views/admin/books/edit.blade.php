@@ -19,7 +19,7 @@
 
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Title</label>
+                            <label class="form-label fw-semibold">Title <span class="text-danger">*</span></label>
                             <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
                                 value="{{ old('title', $book->title) }}" required>
                             @error('title')
@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Author</label>
+                            <label class="form-label fw-semibold">Author <span class="text-danger">*</span></label>
                             <input type="text" name="author" class="form-control @error('author') is-invalid @enderror"
                                 value="{{ old('author', $book->author) }}" required>
                             @error('author')
@@ -37,34 +37,34 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Category</label>
+                            <label class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
                             <input type="text" name="category" class="form-control @error('category') is-invalid @enderror"
-                                value="{{ old('category', $book->category) }}">
+                                value="{{ old('category', $book->category) }}" required>
                             @error('category')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">ISBN</label>
+                            <label class="form-label fw-semibold">ISBN <span class="text-danger">*</span></label>
                             <input type="text" name="isbn" class="form-control @error('isbn') is-invalid @enderror"
-                                value="{{ old('isbn', $book->isbn) }}">
+                                value="{{ old('isbn', $book->isbn) }}" required>
                             @error('isbn')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Language</label>
+                            <label class="form-label fw-semibold">Language <span class="text-danger">*</span></label>
                             <input type="text" name="language" class="form-control @error('language') is-invalid @enderror"
-                                value="{{ old('language', $book->language) }}">
+                                value="{{ old('language', $book->language) }}" required>
                             @error('language')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Quantity</label>
+                            <label class="form-label fw-semibold">Quantity <span class="text-danger">*</span></label>
                             <input type="number" name="quantity"
                                 class="form-control @error('quantity') is-invalid @enderror"
                                 value="{{ old('quantity', $book->quantity) }}" required min="0">

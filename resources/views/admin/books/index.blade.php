@@ -43,7 +43,7 @@
                 <tbody>
                     @forelse ($books as $book)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ ($books->currentPage() - 1) * $books->perPage() + $loop->iteration }}</td>
                             <td>
                                 @if ($book->image)
                                     <img src="{{ asset('storage/' . $book->image) }}" alt="Book"
@@ -88,6 +88,10 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+
+        <div class="mt-4">
+            {{ $books->links() }}
         </div>
     </div>
 @endsection

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Book;
 use Illuminate\Support\Facades\Storage;
+use illuminate\pagination\Paginator;
 
 class BookController extends Controller
 {
@@ -22,9 +23,14 @@ class BookController extends Controller
                 ->orWhere('isbn', 'like', "%{$search}%");
         }
 
-        $books = $query->get();
+        $books = $query->paginate(10);
         return view('admin.books.index', compact('books'));
     }
+
+
+
+
+
 
     public function create()
     {
@@ -36,9 +42,9 @@ class BookController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
-            'category' => 'nullable|string|max:100',
-            'isbn' => 'nullable|string|max:20|unique:books,isbn',
-            'language' => 'nullable|string|max:50',
+            'category' => 'required|string|max:100',
+            'isbn' => 'required|string|max:20|unique:books,isbn',
+            'language' => 'required|string|max:50',
             'quantity' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -64,9 +70,9 @@ class BookController extends Controller
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
-            'category' => 'nullable|string|max:100',
-            'isbn' => 'nullable|string|max:20|unique:books,isbn,' . $book->id,
-            'language' => 'nullable|string|max:50',
+            'category' => 'required|string|max:100',
+            'isbn' => 'required|string|max:20|unique:books,isbn,' . $book->id,
+            'language' => 'required|string|max:50',
             'quantity' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);

@@ -19,7 +19,7 @@
 
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Full Name</label>
+                            <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                                 value="{{ old('name', $user->name) }}" required>
                             @error('name')
@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Email Address</label>
+                            <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
                             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                                 value="{{ old('email', $user->email) }}" required>
                             @error('email')
@@ -37,20 +37,33 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Phone Number</label>
+                            <label class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
                             <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
-                                value="{{ old('phone', $user->phone) }}">
+                                value="{{ old('phone', $user->phone) }}" required>
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Password</label>
+                            <label class="form-label fw-semibold">Password (Min 6 characters)</label>
                             <input type="password" name="password"
-                                class="form-control @error('password') is-invalid @enderror">
+                                class="form-control @error('password') is-invalid @enderror" minlength="6">
                             <p class="small text-muted mt-1">Leave blank to keep current password</p>
                             @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Role <span class="text-danger">*</span></label>
+                            <select name="role" class="form-select @error('role') is-invalid @enderror shadow-none py-2"
+                                required>
+                                <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User</option>
+                                <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin
+                                </option>
+                            </select>
+                            @error('role')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

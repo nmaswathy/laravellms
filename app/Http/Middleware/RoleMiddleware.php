@@ -17,7 +17,7 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, string $role): Response
     {
         if (!Auth::check()) {
-            return redirect('/login')->with('error', 'You must be logged in.');
+            return redirect()->route('login')->with('error', 'You must be logged in.');
         }
 
         $user = Auth::user();
@@ -32,7 +32,7 @@ class RoleMiddleware
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            return redirect('/login')->with('error', 'Unauthorized access attempt.');
+            return redirect()->route('login')->with('error', 'Unauthorized access attempt.');
         }
 
         return $next($request);
