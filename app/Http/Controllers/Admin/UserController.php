@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserCreatedMail;
 use App\Http\Requests\StoreUserRequest;
+use App\Events\NewUserCreatedEvent;
 
 class UserController extends Controller
-{
+{   
     public function index()
     {
         $users = User::where('role', 'user')->orderBy('id', 'DESC')->get();
@@ -29,9 +30,6 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
-
-
-
         $data['password'] = Hash::make($data['password'] ?? '123');
 
         if ($request->hasFile('image')) {
@@ -40,7 +38,7 @@ class UserController extends Controller
         }
 
         User::create($data);
-        Mail::to($request['email'])->send(new UserCreatedMail($data));
+        NewUserCreatedEvent::dispatch($data);
 
         return redirect()->route('admin.users.index')->with('success', 'User added successfully.');
     }
