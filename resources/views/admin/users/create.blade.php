@@ -45,10 +45,10 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Password <span class="text-danger">*</span> (Min 6
-                                characters)</label>
+                            <label class="form-label fw-semibold">Password (Min 3 characters, Default: 123)</label>
                             <input type="password" name="password"
-                                class="form-control @error('password') is-invalid @enderror" required minlength="6">
+                                class="form-control @error('password') is-invalid @enderror"
+                                placeholder="Leave blank for 123" minlength="3">
                             @error('password')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

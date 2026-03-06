@@ -46,9 +46,9 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Password (Min 6 characters)</label>
+                            <label class="form-label fw-semibold">Password (Min 3 characters)</label>
                             <input type="password" name="password"
-                                class="form-control @error('password') is-invalid @enderror" minlength="6">
+                                class="form-control @error('password') is-invalid @enderror" minlength="3">
                             <p class="small text-muted mt-1">Leave blank to keep current password</p>
                             @error('password')
                                 <div class="invalid-feedback">{{ $message }}</div>

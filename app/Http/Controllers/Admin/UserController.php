@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserCreatedMail;
+use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -23,18 +26,13 @@ class UserController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255|unique:users,name',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'phone' => 'required|string|max:15',
-            'password' => 'required|string|min:6',
-            'role' => 'required|in:user,admin',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $data = $request->validated();
 
-        $data['password'] = Hash::make($data['password']);
+
+
+        $data['password'] = Hash::make($data['password'] ?? '123');
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('assets/images/users', 'public');
@@ -42,6 +40,7 @@ class UserController extends Controller
         }
 
         User::create($data);
+        Mail::to($request['email'])->send(new UserCreatedMail($data));
 
         return redirect()->route('admin.users.index')->with('success', 'User added successfully.');
     }
@@ -57,7 +56,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255|unique:users,name,' . $user->id,
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'phone' => 'required|string|max:15',
-            'password' => 'nullable|string|min:6',
+            'password' => 'nullable|string|min:3',
             'role' => 'required|in:user,admin',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
